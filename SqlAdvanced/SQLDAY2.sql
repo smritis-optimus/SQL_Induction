@@ -18,7 +18,7 @@ VALUES('1005','Varun','Singh','M','1','1000','vs'),
 go
 
  /*Feeding values in age column*/
- UPDATE Employee SET age=24 WHERE empid=1001
+UPDATE Employee SET age=24 WHERE empid=1001
 UPDATE Employee SET age=24 WHERE empid=1002
 UPDATE Employee SET age=23 WHERE empid=1003
 UPDATE Employee SET age=22 WHERE empid=1004
@@ -28,7 +28,8 @@ UPDATE Employee SET age=39 WHERE empid=1007
 
  go
 
- SELECT FirstName,LastName,CASE
+ SELECT FirstName,LastName,
+ CASE
  WHEN Salary>5000 AND Age<35 THEN 'YES'
  ELSE 'NO'
  END
@@ -43,7 +44,7 @@ USE MIS
 
 go
 SELECT * FROM(
-SELECT empid,FirstName,LastName,Salary,
+SELECT Empid,FirstName,LastName,Salary,
 RANK() over(order by Salary desc) AS ranking
 From Employee) as new
 WHERE ranking<6
@@ -54,7 +55,7 @@ USE MIS
 
 go
 SELECT * FROM(
-SELECT empid,FirstName,LastName,Salary,
+SELECT Empid,FirstName,LastName,Salary,
 RANK() over(order by Salary asc) AS ranking
 From Employee) as new
 WHERE ranking<6
@@ -63,12 +64,12 @@ go
 
 /*No. 50:build a query using CTE 
 */
-WITH EmployeeCTE(FirstName,Salary) AS
+WITH EmpData(FirstName,Salary) AS
 ( SELECT FirstName,Salary
   FROM Employee
   WHERE Salary>5000
 )
-SELECT * FROM EmployeeCTE
+SELECT * FROM EmpData
 
 go
 
@@ -119,7 +120,7 @@ SELECT *
 FROM Joining
 INTERSECT
 SELECT *
-FROM Joining
+FROM JoiningS
 WHERE Ex<6
 
 go
@@ -130,9 +131,9 @@ go
 USE MIS
 
 go
-SELECT runn.empid, RunningTotal=SUM(runn.Salary) OVER (ORDER BY runn.empid)
-FROM   Employee runn
-ORDER BY runn.empid
+SELECT EmpInfo.Empid, RunningTotal=SUM(EmpInfo.Salary) OVER (ORDER BY EmpInfo.empid)
+FROM   Employee EmpInfo
+ORDER BY EmpInfo.Empid
 
 go
 
@@ -141,7 +142,7 @@ USE MIS
 
 go
 SELECT * FROM(
-SELECT empid,FirstName,LastName,Salary,
+SELECT Empid,FirstName,LastName,Salary,
 RANK() over(order by Salary desc) AS ranking
 From Employee) as new
 WHERE ranking<4
