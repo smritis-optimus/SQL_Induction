@@ -176,6 +176,7 @@ USE MIS
 go
 
 CREATE TABLE EmployeeSalary(
+Empid int,
 Ba float,
 Hr float,
 Da float,
@@ -189,11 +190,64 @@ AS
 UPDATE EmployeeSalary
 SET gs=(Ba+Hr+Da)*12
 
-INSERT INTO EmployeeSalary(Ba,Hr,Da) VALUES('18500','200','1000')
+INSERT INTO EmployeeSalary(Empid,Ba,Hr,Da) VALUES('121','18500','200','1000')
 
 go
 
-SELECT * FROM EMployeeSalary
+SELECT * FROM EmployeeSalary
 
 go
+
+
+CREATE TABLE EmployeeSalary(
+Empid int,
+Ba float,
+Hr float,
+Da float,
+Gs float)
+
+go
+
+CREATE TRIGGER GrossSalary ON EmployeeSalary 
+FOR INSERT
+AS
+UPDATE EmployeeSalary
+SET gs=(Ba+Hr+Da)*12
+
+INSERT INTO EmployeeSalary(Empid,Ba,Hr,Da) VALUES('121','18500','200','1000')
+
+go
+
+SELECT * FROM EmployeeSalary
+
+go
+/*No.59*/
+USE MIS
+go
+
+ SET NOCOUNT ON
+ DECLARE @Id int
+DECLARE @Cba float
+DECLARE @Chr float
+DECLARE @Cda float
+DECLARE @Cga float
+ DECLARE cur_emp CURSOR
+STATIC FOR 
+SELECT Empid,Ba,Hr,Da from EmployeeSalary
+OPEN cur_emp
+IF @@CURSOR_ROWS > 0
+ BEGIN 
+ FETCH NEXT FROM cur_emp INTO @Id,@Cba,@Chr,@Cda
+ WHILE @@Fetch_status = 0
+ BEGIN
+ PRINT 'ID : '+ convert(varchar(20),@Id)+', Gross Salary : '+convert(varchar(20),(@Cba+@Chr+@Cda)*12)
+ FETCH NEXT FROM cur_emp INTO @Id,@Cba,@Chr,@Cda
+ END
+END
+CLOSE cur_emp
+DEALLOCATE cur_emp
+SET NOCOUNT OFF
+
+go
+
 
