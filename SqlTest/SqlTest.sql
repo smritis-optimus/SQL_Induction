@@ -126,7 +126,15 @@ go
 
 
 --query5:employee id and name with second highest basic salary
+--if some have same basic
+SELECT * FROM(
+SELECT Id,Basic,
+DENSE_RANK()over(order by Basic desc) AS Rankb
+FROM Employee
+) Emp
+WHERE Rankb=2
 
+--if basic is different for all
 SELECT TOP 1 Basic,Id FROM(
 SELECT TOP 2 Basic,ID FROM Employee
 ORDER BY Basic desc) AS Emp
