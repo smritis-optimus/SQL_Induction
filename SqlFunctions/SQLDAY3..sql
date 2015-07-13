@@ -1,7 +1,7 @@
 /*NO.61:Create a function that takes input as year(integer) and returns a string that display 'leap year' &
 Non-leap year' */
 
-CREATE FUNCTION dbo.mis_IsLeapYr (@year int)
+CREATE FUNCTION dbo.mis_LeapYr (@year int)
 RETURNS varchar(30)
 AS
 BEGIN
@@ -22,10 +22,10 @@ END
 
 go
 
-SELECT dbo.mis_IsLeapYr(1900) AS 'IsLeapYear?'
-SELECT dbo.mis_IsLeapYr(2000) AS 'IsLeapYear?'
-SELECT dbo.mis_IsLeapYr(2006) AS 'IsLeapYear?'
-SELECT dbo.mis_IsLeapYr(2015) AS 'IsLeapYear?'
+SELECT dbo.mis_LeapYr(1900) AS 'IsLeapYear?'
+SELECT dbo.mis_LeapYr(2000) AS 'IsLeapYear?'
+SELECT dbo.mis_LeapYr(2006) AS 'IsLeapYear?'
+SELECT dbo.mis_LeapYr(2015) AS 'IsLeapYear?'
 
 go
 
